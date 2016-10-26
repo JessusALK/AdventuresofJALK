@@ -1,0 +1,180 @@
+
+Animations.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+BWalkingLeft
+  rotate: false
+  xy: 1, 808
+  size: 576, 192
+  orig: 576, 192
+  offset: 0, 0
+  index: -1
+BWalkingRight
+  rotate: false
+  xy: 1, 614
+  size: 576, 192
+  orig: 576, 192
+  offset: 0, 0
+  index: -1
+badlogic
+  rotate: false
+  xy: 579, 744
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Lava
+  rotate: false
+  xy: 1, 555
+  size: 439, 57
+  orig: 439, 57
+  offset: 0, 0
+  index: -1
+BShootLeft
+  rotate: false
+  xy: 1, 361
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+BShootRight
+  rotate: false
+  xy: 1, 167
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+PWalkingLeft
+  rotate: false
+  xy: 579, 678
+  size: 320, 64
+  orig: 320, 64
+  offset: 0, 0
+  index: -1
+PWalkingRight
+  rotate: false
+  xy: 579, 612
+  size: 320, 64
+  orig: 320, 64
+  offset: 0, 0
+  index: -1
+ZWalkingLeft
+  rotate: false
+  xy: 195, 489
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
+ZWalkingRight
+  rotate: false
+  xy: 1, 101
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
+PShootL
+  rotate: false
+  xy: 837, 936
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+PShootR
+  rotate: false
+  xy: 195, 423
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+BoundsBottom
+  rotate: false
+  xy: 1, 35
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+BoundsLeft
+  rotate: false
+  xy: 837, 870
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+BoundsRight
+  rotate: false
+  xy: 195, 357
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+BoundsTop
+  rotate: false
+  xy: 67, 35
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Bullet
+  rotate: false
+  xy: 837, 804
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+PJumpLeft
+  rotate: false
+  xy: 195, 291
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+PJumpRight
+  rotate: false
+  xy: 195, 225
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+BBullet
+  rotate: false
+  xy: 442, 570
+  size: 78, 42
+  orig: 78, 42
+  offset: 0, 0
+  index: -1
+FloatingPlat
+  rotate: false
+  xy: 389, 499
+  size: 51, 54
+  orig: 51, 54
+  offset: 0, 0
+  index: -1
+Grass
+  rotate: false
+  xy: 967, 946
+  size: 51, 54
+  orig: 51, 54
+  offset: 0, 0
+  index: -1
+Stone
+  rotate: false
+  xy: 325, 433
+  size: 51, 54
+  orig: 51, 54
+  offset: 0, 0
+  index: -1
+blocks
+  rotate: false
+  xy: 1, 1
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+HP
+  rotate: false
+  xy: 903, 902
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
