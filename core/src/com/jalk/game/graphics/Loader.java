@@ -29,8 +29,11 @@ import com.badlogic.gdx.math.Rectangle;
     public static void setAnimation(Animation animation){
         anim = animation;
     }
-    public static void drawSprite(SpriteBatch batch,Float elapsedTime, Rectangle rectangle){
+    public static void drawAnimation(SpriteBatch batch,Float elapsedTime, Rectangle rectangle){
         batch.draw(anim.getKeyFrame(elapsedTime/2f, true), rectangle.x, rectangle.y);
+    }
+    public static void drawSprite(SpriteBatch batch, Texture tex, Rectangle rect){
+        batch.draw(tex, rect.x, rect.y);
     }
 
 

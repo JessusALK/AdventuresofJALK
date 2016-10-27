@@ -23,12 +23,18 @@ public abstract class GameObject {
     }
 
 
-    public void setX(float x){
+    public void setVelX(float x){
         xPos += x;
     }
 
-    public void setY(float y){
+    public void setVelY(float y){
         yPos += y;
+    }
+    public void setX(float x){
+        xPos = x;
+    }
+    public void setY(float y){
+        yPos = y;
     }
 
     public float getX(){

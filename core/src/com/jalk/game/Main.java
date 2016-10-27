@@ -23,13 +23,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.jalk.game.entity.Block;
 import com.jalk.game.entity.Player;
 import com.jalk.game.graphics.Assets;
 import com.jalk.game.graphics.Loader;
 
-import static com.jalk.game.graphics.Loader.drawSprite;
-import static com.jalk.game.graphics.Loader.loadAnimations;
-import static com.jalk.game.graphics.Loader.setAnimation;
+import static com.jalk.game.graphics.Loader.*;
 
 public class Main extends ApplicationAdapter {
 	private SpriteBatch batch;
@@ -38,6 +37,7 @@ public class Main extends ApplicationAdapter {
 	private Texture playerWalkU;
 	private Texture playerWalkR;
 	private Texture playerWalkL;
+	private Texture bushTex;
 	private Animation walkD;
 	private Animation walkU;
 	private Animation walkR;
@@ -50,6 +50,7 @@ public class Main extends ApplicationAdapter {
 	private TiledMapTileLayer layer;
 	private MapProperties mapProperties;
 	private Player player;
+	private Block Bush;
 
 	FPSLogger fps;
 
@@ -84,6 +85,7 @@ public class Main extends ApplicationAdapter {
 		playerWalkU = new Texture("PWUp.png");
 		playerWalkR = new Texture("PWRight.png");
 		playerWalkL = new Texture("PWLeft.png");
+		bushTex = new Texture("bush.png");
 
 
 
@@ -111,6 +113,10 @@ public class Main extends ApplicationAdapter {
 		player.height = 32;
 		player.width = 32;
 		*/
+		Bush = new Block(800/2 - 64 / 2, 40, 32, 32, "Bush");
+
+
+
 
 
 
@@ -129,6 +135,7 @@ public class Main extends ApplicationAdapter {
 	public void render () {
 		fps.log();
 		elapsedTime += Gdx.graphics.getDeltaTime();
+		player.handleInput();
 
 
 		Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -150,30 +157,33 @@ public class Main extends ApplicationAdapter {
 			startAnim++;
 
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if(player.getCharacterState().equals("left")){
 			setAnimation(walkL);
-			player.setX(-100* Gdx.graphics.getDeltaTime()) ;
-
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		if(player.getCharacterState().equals("right")){
 			setAnimation(walkR);
-			player.setX(100* Gdx.graphics.getDeltaTime()) ;
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+		if(player.getCharacterState().equals("up")){
 			setAnimation(walkU);
-			player.setY(100* Gdx.graphics.getDeltaTime()) ;
-
-
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+		if(player.getCharacterState().equals("down")){
 			setAnimation(walkD);
-			player.setY(-100* Gdx.graphics.getDeltaTime()) ;
-
 		}
+		if(player.getBounds().overlaps(Bush.getBounds())){
+
+			player.setVelX(5);
+			player.setVelY(5);
+		}
+		if(player.getX() <= 0 || player.getY() <= 0){
+			player.setVelX(1);
+			player.setVelY(1);
+		}
+		System.out.println("Player x : " + player.getX() + " Player y : " + player.getY());
 
 
 
-		drawSprite(batch, elapsedTime, player.getBounds());
+		drawAnimation(batch, elapsedTime, player.getBounds());
+		drawSprite(batch, bushTex, Bush.getBounds());
 
 		batch.end();
 
