@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -18,6 +20,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.Shape;
+import com.jalk.game.entity.Player;
 import com.jalk.game.graphics.Assets;
 import com.jalk.game.graphics.Loader;
 
@@ -36,13 +42,15 @@ public class Main extends ApplicationAdapter {
 	private Animation walkU;
 	private Animation walkR;
 	private Animation walkL;
-	private Rectangle player;
 	private Rectangle block;
 	private OrthographicCamera camera;
 	private TextureRegion[] animationFrames;
 	private TiledMap tiledMap;
 	private TiledMapRenderer tiledMapRenderer;
 	private TiledMapTileLayer layer;
+	private MapProperties mapProperties;
+	private Player player;
+
 	FPSLogger fps;
 
 
@@ -60,6 +68,9 @@ public class Main extends ApplicationAdapter {
 		img = new Texture("blocks.png");
 		tiledMap = new TmxMapLoader().load("Map.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		mapProperties = tiledMap.getProperties();
+		int mapWidth = mapProperties.get("width", Integer.class);
+
 		layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 		fps = new FPSLogger();
 
@@ -91,12 +102,18 @@ public class Main extends ApplicationAdapter {
 
 
 		block = new Rectangle();
-		player = new Rectangle();
+		player = new Player(800 / 2 - 64 / 2, 40, 32, 32);
 
-		player.x = 800 / 2 - 64 / 2;
+
+
+		/*player.x = ;
 		player.y = 40;
 		player.height = 32;
 		player.width = 32;
+		*/
+
+
+
 
 
 
@@ -117,10 +134,9 @@ public class Main extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		camera.position.set(player.x, player.y, 0);
+		camera.position.set(player.getX(), player.getY(), 0);
 		float lerp = .9f;
 		//camera.position.set(player.x * lerp	, player.y * lerp , 0);
-		camera.position.clamp(Gdx.graphics.getHeight(), Gdx.graphics.getWidth());
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
@@ -136,24 +152,29 @@ public class Main extends ApplicationAdapter {
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			setAnimation(walkL);
-			player.x-= 100 * Gdx.graphics.getDeltaTime();
+			player.setX(-100* Gdx.graphics.getDeltaTime()) ;
 
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			setAnimation(walkR);
-			player.x += 100 * Gdx.graphics.getDeltaTime();
+			player.setX(100* Gdx.graphics.getDeltaTime()) ;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			setAnimation(walkU);
-			player.y += 100 * Gdx.graphics.getDeltaTime();
+			player.setY(100* Gdx.graphics.getDeltaTime()) ;
+
 
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			setAnimation(walkD);
-			player.y -= 100 * Gdx.graphics.getDeltaTime();
+			player.setY(-100* Gdx.graphics.getDeltaTime()) ;
+
 		}
 
-		drawSprite(batch,elapsedTime, player);
+
+
+		drawSprite(batch, elapsedTime, player.getBounds());
+
 		batch.end();
 
 
