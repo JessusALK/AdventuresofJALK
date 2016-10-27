@@ -18,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
@@ -27,6 +28,7 @@ import com.jalk.game.entity.Block;
 import com.jalk.game.entity.Player;
 import com.jalk.game.graphics.Assets;
 import com.jalk.game.graphics.Loader;
+
 
 import static com.jalk.game.graphics.Loader.*;
 
@@ -136,6 +138,8 @@ public class Main extends ApplicationAdapter {
 		fps.log();
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		player.handleInput();
+        player.collisionDetection(Bush.getBounds());
+        
 
 
 		Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -169,11 +173,7 @@ public class Main extends ApplicationAdapter {
 		if(player.getCharacterState().equals("down")){
 			setAnimation(walkD);
 		}
-		if(player.getBounds().overlaps(Bush.getBounds())){
 
-			player.setVelX(5);
-			player.setVelY(5);
-		}
 		if(player.getX() <= 0 || player.getY() <= 0){
 			player.setVelX(1);
 			player.setVelY(1);
@@ -204,6 +204,7 @@ public class Main extends ApplicationAdapter {
 		playerWalkU.dispose();
 		playerWalkR.dispose();
 		playerWalkL.dispose();
+		bushTex.dispose();
 
 		img.dispose();
 	}

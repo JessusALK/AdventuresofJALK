@@ -55,5 +55,52 @@ public abstract class GameObject {
         return new Rectangle(xPos, yPos, width, height);
 
     }
+    public void collisionDetection(Rectangle rect){
+        collideBottom(rect);
+        collideRight(rect);
+        collideTop(rect);
+        collideLeft(rect);
+    }
+
+    private void collideLeft(Rectangle tileRect) {
+        Rectangle rect = getBounds();
+        Rectangle left = new Rectangle(rect.x, rect.y + (15 / 2), 5, rect.getHeight() - 15);
+        if (left.overlaps(tileRect)) {
+            setX((float) (tileRect.getX() + (getWidth())));
+            setVelX(0);
+
+        }
+    }
+
+    private void collideRight(Rectangle tileRect) {
+        Rectangle rect = getBounds();
+        Rectangle right = new Rectangle(rect.x + rect.width - 5, rect.y + (15 / 2), 5, rect.getHeight() - 15);
+        if (right.overlaps(tileRect)) {
+            setX(((float) tileRect.getX() - getWidth()));
+
+            setVelX(0);
+
+
+        }
+    }
+
+    private void collideBottom(Rectangle tileRect) {
+        Rectangle rect = getBounds();
+        Rectangle bottom = new Rectangle(rect.x + (15 / 2), rect.y + rect.getHeight() - 5, rect.width - 15, 5);
+        if (bottom.overlaps(tileRect)) {
+            setY((float) tileRect.getY() - getHeight());
+            setVelX(0);
+
+        }
+    }
+
+    private void collideTop(Rectangle tileRect) {
+        Rectangle rect = getBounds();
+        Rectangle top = new Rectangle(rect.x + (15 / 2), rect.y, rect.width - 15, 5);
+        if (top.overlaps(tileRect)) {
+            setY((float) tileRect.getY() + getHeight());
+            setVelY(1);
+        }
+    }
 
 }
