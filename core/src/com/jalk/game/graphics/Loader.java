@@ -2,8 +2,12 @@ package com.jalk.game.graphics;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -34,6 +38,15 @@ import com.badlogic.gdx.math.Rectangle;
     }
     public static void drawSprite(SpriteBatch batch, Texture tex, Rectangle rect){
         batch.draw(tex, rect.x, rect.y);
+    }
+
+    public static void renderMapObjects(MapLayer objLayer, Batch batch, String name){
+        for(MapObject o : objLayer.getObjects()){
+            if(o.getName().equals(name)){
+                TextureMapObject obj = (TextureMapObject) o;
+                batch.draw(obj.getTextureRegion(), obj.getX(), obj.getY());
+            }
+        }
     }
 
 

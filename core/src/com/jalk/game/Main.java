@@ -2,35 +2,31 @@ package com.jalk.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.physics.box2d.Box2D;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.jalk.game.entity.Block;
 import com.jalk.game.entity.Player;
-import com.jalk.game.graphics.Assets;
-import com.jalk.game.graphics.Loader;
 
 
 import static com.jalk.game.graphics.Loader.*;
+import static com.jalk.game.world.MapSpecifications.getObjectX;
+import static com.jalk.game.world.MapSpecifications.getObjectY;
 
 public class Main extends ApplicationAdapter {
 	private SpriteBatch batch;
@@ -49,10 +45,16 @@ public class Main extends ApplicationAdapter {
 	private TextureRegion[] animationFrames;
 	private TiledMap tiledMap;
 	private TiledMapRenderer tiledMapRenderer;
-	private TiledMapTileLayer layer;
+	private TiledMapTileLayer backLayer;
+	private MapLayer objectLayer;
 	private MapProperties mapProperties;
 	private Player player;
 	private Block Bush;
+	private MapObjects  objects;
+	private MapObject playerObj;
+	private MapObject rockObj;
+
+
 
 	FPSLogger fps;
 
@@ -68,13 +70,33 @@ public class Main extends ApplicationAdapter {
 	public void create () {
 
 		batch = new SpriteBatch();
+		objects = new MapObjects();
+
+
 		img = new Texture("blocks.png");
 		tiledMap = new TmxMapLoader().load("Map.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
 		mapProperties = tiledMap.getProperties();
 		int mapWidth = mapProperties.get("width", Integer.class);
 
-		layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+
+
+
+		backLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+		objectLayer = tiledMap.getLayers().get("GameObject");
+
+		objects = objectLayer.getObjects();
+
+		playerObj = objectLayer.getObjects().get("Player");
+		int s = objectLayer.getObjects().getCount();
+		System.out.println(s);
+
+
+
+		
+
+		System.out.println(getObjectX(playerObj, "Player") + ", " + getObjectY(playerObj, "Player"));
 		fps = new FPSLogger();
 
 
@@ -106,7 +128,7 @@ public class Main extends ApplicationAdapter {
 
 
 		block = new Rectangle();
-		player = new Player(800 / 2 - 64 / 2, 40, 32, 32);
+		player = new Player(getObjectX(playerObj, "Player"), getObjectY(playerObj, "Player"), 32, 32);
 
 
 
@@ -139,10 +161,10 @@ public class Main extends ApplicationAdapter {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		player.handleInput();
         player.collisionDetection(Bush.getBounds());
-        
 
 
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+
+		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.position.set(player.getX(), player.getY(), 0);
@@ -154,8 +176,16 @@ public class Main extends ApplicationAdapter {
 
 
 
+
+
+
+
+
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		renderMapObjects(objectLayer, batch, "Rock");
+
+
 		if(startAnim == 0){
 			setAnimation(walkD);
 			startAnim++;
@@ -175,8 +205,8 @@ public class Main extends ApplicationAdapter {
 		}
 
 		if(player.getX() <= 0 || player.getY() <= 0){
-			player.setVelX(1);
-			player.setVelY(1);
+			player.setVelX(0);
+			player.setVelY(0);
 		}
 		System.out.println("Player x : " + player.getX() + " Player y : " + player.getY());
 
@@ -205,6 +235,7 @@ public class Main extends ApplicationAdapter {
 		playerWalkR.dispose();
 		playerWalkL.dispose();
 		bushTex.dispose();
+		tiledMap.dispose();
 
 		img.dispose();
 	}

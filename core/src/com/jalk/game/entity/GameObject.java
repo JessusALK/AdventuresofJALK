@@ -66,7 +66,7 @@ public abstract class GameObject {
         Rectangle rect = getBounds();
         Rectangle left = new Rectangle(rect.x, rect.y + (15 / 2), 5, rect.getHeight() - 15);
         if (left.overlaps(tileRect)) {
-            setX((float) (tileRect.getX() + (getWidth())));
+            setX(tileRect.getX() + getWidth());
             setVelX(0);
 
         }
@@ -76,7 +76,7 @@ public abstract class GameObject {
         Rectangle rect = getBounds();
         Rectangle right = new Rectangle(rect.x + rect.width - 5, rect.y + (15 / 2), 5, rect.getHeight() - 15);
         if (right.overlaps(tileRect)) {
-            setX(((float) tileRect.getX() - getWidth()));
+            setX(tileRect.getX() - getWidth());
 
             setVelX(0);
 
@@ -88,7 +88,7 @@ public abstract class GameObject {
         Rectangle rect = getBounds();
         Rectangle bottom = new Rectangle(rect.x + (15 / 2), rect.y + rect.getHeight() - 5, rect.width - 15, 5);
         if (bottom.overlaps(tileRect)) {
-            setY((float) tileRect.getY() - getHeight());
+            setY(tileRect.getY() - getHeight());
             setVelX(0);
 
         }
@@ -98,7 +98,7 @@ public abstract class GameObject {
         Rectangle rect = getBounds();
         Rectangle top = new Rectangle(rect.x + (15 / 2), rect.y, rect.width - 15, 5);
         if (top.overlaps(tileRect)) {
-            setY((float) tileRect.getY() + getHeight());
+            setY(tileRect.getY() + getHeight());
             setVelY(1);
         }
     }
