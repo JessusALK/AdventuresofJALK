@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="56">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="71">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" margin="1" tilecount="600" columns="50">
   <image source="tiles.png" width="816" height="208"/>
  </tileset>
@@ -114,7 +114,7 @@
   <object id="7" name="Player" x="289.333" y="1505.33" width="32" height="32"/>
   <object id="26" name="Rock" gid="271" x="370.667" y="1374.67" width="16" height="16"/>
   <object id="27" name="Rock" gid="271" x="352" y="1376" width="16" height="16"/>
-  <object id="28" name="Rock" type="block" gid="271" x="336" y="1376" width="16" height="16"/>
+  <object id="28" name="Rock" gid="271" x="336" y="1376" width="16" height="16"/>
   <object id="29" name="Rock" gid="271" x="320" y="1376" width="16" height="16"/>
   <object id="31" name="Rock" gid="271" x="304" y="1376" width="16" height="16"/>
   <object id="32" name="Rock" gid="271" x="288" y="1392" width="16" height="16"/>

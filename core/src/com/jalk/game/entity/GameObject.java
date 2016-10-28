@@ -99,7 +99,7 @@ public abstract class GameObject {
         Rectangle top = new Rectangle(rect.x + (15 / 2), rect.y, rect.width - 15, 5);
         if (top.overlaps(tileRect)) {
             setY(tileRect.getY() + getHeight());
-            setVelY(1);
+            setVelY(0);
         }
     }
 

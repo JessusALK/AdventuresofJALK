@@ -13,12 +13,15 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.jalk.game.entity.Block;
 import com.jalk.game.entity.Player;
@@ -87,6 +90,7 @@ public class Main extends ApplicationAdapter {
 		objectLayer = tiledMap.getLayers().get("GameObject");
 
 		objects = objectLayer.getObjects();
+
 
 		playerObj = objectLayer.getObjects().get("Player");
 		int s = objectLayer.getObjects().getCount();
@@ -161,6 +165,14 @@ public class Main extends ApplicationAdapter {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		player.handleInput();
         player.collisionDetection(Bush.getBounds());
+
+		for (TiledMapTileMapObject rectangleObject : objectLayer.getObjects().getByType(TiledMapTileMapObject.class)) {
+			Rectangle rectangle = new Rectangle((rectangleObject.getX()), rectangleObject.getY(), rectangleObject.getProperties().get("width", Float.class),
+					rectangleObject.getProperties().get("height", Float.class));
+			if(Intersector.overlaps(rectangle, player.getBounds())){
+				player.collisionDetection(rectangle);
+			}
+		}
 
 
 

@@ -39,6 +39,7 @@ public class Player extends GameObject {
 
 
 
+
     public String getCharacterState(){
         return state;
     }
